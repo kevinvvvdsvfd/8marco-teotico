@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Investigar y marco teórico 8°</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Cuaderno de taller: una columna de lectura, pasos arriba; verde institucional + amarillo maíz; la parte a mano lleva papel rayado */
+:root{
+  --bg:#F2F5F3; --surface:#FFFFFF; --surface2:#E6EEE9; --ink:#14211C; --muted:#55665E; --line:#CAD7CF;
+  --accent:#2E6B45; --accent-ink:#FFFFFF; --maiz:#9A6B0C; --maiz-soft:#F5EACB;
+  --ok:#2E7D4F; --ok-soft:#DCEFE3; --bad:#B3261E; --bad-soft:#F7E0DD;
+  --paper:#FFFDF6; --rule:#D5E1EC; --margin:#E3A3A0;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F1613; --surface:#16201C; --surface2:#1E2A25; --ink:#E4EDE8; --muted:#9DB0A7; --line:#2E3E37;
+  --accent:#7CC796; --accent-ink:#0F1613; --maiz:#E2B54A; --maiz-soft:#3A311A;
+  --ok:#7CC796; --ok-soft:#1D3527; --bad:#F08A80; --bad-soft:#3D201C;
+  --paper:#1A221F; --rule:#2A3843; --margin:#6E3A38; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1613; --surface:#16201C; --surface2:#1E2A25; --ink:#E4EDE8; --muted:#9DB0A7; --line:#2E3E37;
+  --accent:#7CC796; --accent-ink:#0F1613; --maiz:#E2B54A; --maiz-soft:#3A311A;
+  --ok:#7CC796; --ok-soft:#1D3527; --bad:#F08A80; --bad-soft:#3D201C;
+  --paper:#1A221F; --rule:#2A3843; --margin:#6E3A38; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--body)}
+[hidden]{display:none!important}
+.wrap{max-width:880px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,5.5vw,46px);font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(24px,3.6vw,30px);font-weight:700}
+h3{font-size:20px;font-weight:700}
+p{margin:0}
+.label{font:500 12px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+a{color:var(--accent)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--maiz);outline-offset:2px}
+
+.top{background:var(--surface);border-bottom:1px solid var(--line)}
+.top .wrap{padding-block:28px 22px;display:grid;gap:14px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--muted);font-size:15px}
+.meta b{color:var(--ink);font-weight:600}
+.lead{font-size:19px;max-width:62ch;color:var(--muted)}
+.std{font-size:15px;color:var(--muted);max-width:70ch;border-top:1px solid var(--line);padding-top:10px}
+
+.steps{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.steps .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:thin}
+.step{flex:0 0 auto;display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 14px 7px 8px;font-weight:600;font-size:15px}
+.step .n{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--surface2);font:500 12px var(--mono)}
+.step[aria-current="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.step[aria-current="true"] .n{background:var(--accent-ink);color:var(--accent)}
+.step .done{font-size:12px;color:var(--ok)}
+.step[aria-current="true"] .done{color:var(--accent-ink)}
+
+main .wrap{padding-block:34px 60px}
+section.panel{display:grid;gap:30px}
+.block{display:grid;gap:12px}
+.block p,.block li{max-width:68ch}
+.block ul,.block ol{margin:0;padding-left:22px;display:grid;gap:6px}
+.key{border-left:4px solid var(--maiz);background:var(--maiz-soft);padding:14px 18px;border-radius:0 8px 8px 0;font-size:18px}
+
+.duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:8px;align-content:start;min-width:0}
+.card .label{color:var(--accent)}
+.ex{font-size:15px;color:var(--muted)}
+.ex b{color:var(--ink)}
+
+.timeline{list-style:none;padding:0!important;margin:0;display:grid;gap:0!important;border-left:2px solid var(--line);margin-left:8px!important}
+.timeline li{position:relative;padding:4px 0 12px 22px;display:grid;gap:2px}
+.timeline li::before{content:"";position:absolute;left:-7px;top:10px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+.timeline .yr{font:500 13px var(--mono);color:var(--maiz)}
+.timeline span:last-child{font-size:16px}
+
+.cycle{list-style:none;padding:0!important;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.cycle li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:4px;align-content:start}
+.cycle .n{font:500 13px var(--mono);color:var(--maiz)}
+.cycle b{font-family:var(--display);font-size:18px}
+.cycle span{font-size:15px;color:var(--muted)}
+
+.matrix{display:grid;grid-template-columns:auto 1fr 1fr;grid-template-rows:auto 1fr 1fr;gap:8px;align-items:stretch}
+.matrix .ax{font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;justify-content:center;text-align:center}
+.matrix .ax.v{writing-mode:vertical-rl;transform:rotate(180deg)}
+.matrix .q{border-radius:10px;padding:14px;display:grid;gap:4px;align-content:start;border:1px solid var(--line);background:var(--surface);min-width:0}
+.matrix .q b{font-family:var(--display);font-size:17px}
+.matrix .q span{font-size:14px;color:var(--muted)}
+.matrix .q.go{background:var(--ok-soft);border-color:var(--ok)}
+.matrix .q.go b{color:var(--ok)}
+.matrix .q.no{background:var(--bad-soft);border-color:var(--bad)}
+.matrix .q.no b{color:var(--bad)}
+
+.sorter{display:grid;gap:10px}
+.sort-item{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px}
+.sort-item .btns{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface2);color:var(--ink);border-radius:999px;padding:6px 14px;font-size:15px;font-weight:600}
+.chip:hover{border-color:var(--accent)}
+.fb{font-size:15px;padding:8px 12px;border-radius:8px}
+.fb.ok{background:var(--ok-soft);color:var(--ok)}
+.fb.bad{background:var(--bad-soft);color:var(--bad)}
+
+.tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:15px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--display);font-size:15px;background:var(--surface2)}
+tr:last-child td{border-bottom:0}
+table.edit td{padding:6px}
+table.edit input,table.edit select{width:100%}
+
+.nav-bottom{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:20px}
+.btn{border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);border-radius:8px;padding:11px 18px;font-weight:700;font-size:16px}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.warn{border-color:var(--bad);background:transparent;color:var(--bad)}
+.btn.small{padding:6px 12px;font-size:14px}
+
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:grid;gap:14px}
+.item header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.item .code{font:500 13px var(--mono);color:var(--accent-ink);background:var(--accent);padding:2px 8px;border-radius:4px}
+.item .pts{margin-left:auto;font:500 12px var(--mono);color:var(--muted)}
+.caso{background:var(--surface2);border-radius:8px;padding:14px 16px;font-size:16px}
+.field{display:grid;gap:6px}
+.field label{font-weight:600;font-size:15px}
+textarea,input[type=text],input[type=date],select{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+textarea{resize:vertical;min-height:70px;line-height:1.5}
+textarea:focus,input:focus,select:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+.parte{display:flex;align-items:center;gap:12px}
+.parte::after{content:"";flex:1;height:1px;background:var(--line)}
+.quad{display:inline-block;padding:3px 10px;border-radius:999px;font-size:14px;font-weight:600;background:var(--surface2);color:var(--muted);white-space:nowrap}
+.quad.go{background:var(--ok-soft);color:var(--ok)}
+.quad.plan{background:var(--maiz-soft);color:var(--maiz)}
+.quad.no{background:var(--bad-soft);color:var(--bad)}
+
+/* Parte a mano: hoja de cuaderno */
+.item.hand{border-color:var(--maiz)}
+.item.hand .code{background:var(--maiz)}
+.notebook{background:var(--paper) repeating-linear-gradient(to bottom,transparent 0 31px,var(--rule) 31px 32px);border:1px solid var(--line);border-radius:8px;padding:6px 18px 10px 46px;position:relative;line-height:32px;font-size:17px}
+.notebook::before{content:"";position:absolute;top:0;bottom:0;left:32px;width:2px;background:var(--margin)}
+.notebook ol,.notebook ul{margin:0;padding-left:20px}
+.notebook p{line-height:32px}
+.check{display:flex;gap:10px;align-items:center;font-weight:600}
+.check input{width:20px;height:20px;accent-color:var(--accent)}
+.photos{display:flex;flex-wrap:wrap;gap:10px}
+.photo{position:relative;width:150px;max-width:100%}
+.photo img{width:150px;height:110px;object-fit:cover;border-radius:6px;border:1px solid var(--line);display:block}
+.photo button{position:absolute;top:4px;right:4px;border:0;border-radius:4px;background:var(--bad);color:#fff;font-size:12px;padding:2px 8px}
+.upload{display:grid;gap:6px}
+.upload input[type=file]{font-size:15px;max-width:100%}
+.row2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;align-items:end}
+
+.q{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:grid;gap:10px;margin:0}
+.q legend{font-weight:700;font-size:17px;padding:0;margin-bottom:6px;display:flex;gap:10px}
+.q legend .n{font:500 13px var(--mono);color:var(--maiz);padding-top:4px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:8px;border:1px solid transparent}
+.opt:hover{background:var(--surface2)}
+.opt input{margin-top:5px;accent-color:var(--accent)}
+.opt.correct{background:var(--ok-soft);border-color:var(--ok)}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.score{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:var(--surface);border:2px solid var(--accent);border-radius:12px;padding:16px 20px}
+.score .big{font:800 36px var(--display);font-variant-numeric:tabular-nums}
+
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.form .wide{grid-column:1/-1}
+.status{display:grid;gap:8px;list-style:none;padding:0!important;margin:0}
+.status li{display:flex;gap:10px;align-items:center;font-size:16px}
+.dot{width:12px;height:12px;border-radius:50%;flex:0 0 auto;background:var(--line)}
+.dot.ok{background:var(--ok)}.dot.half{background:var(--maiz)}
+.msg{padding:12px 14px;border-radius:8px;font-size:16px}
+.msg.ok{background:var(--ok-soft);color:var(--ok)}
+.msg.bad{background:var(--bad-soft);color:var(--bad)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.small{font-size:14px;color:var(--muted)}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+footer .wrap{padding-block:20px}
+@media (max-width:520px){.matrix{grid-template-columns:1fr 1fr;grid-template-rows:auto}.matrix .ax{display:none}}
+@media (prefers-reduced-motion:no-preference){.panel{animation:in .25s ease-out}@keyframes in{from{transform:translateY(6px)}to{transform:none}}}
+</style>
+<style>
+.five{list-style:none;padding:0!important;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.five li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:4px;align-content:start}
+.five .n{font:500 13px var(--mono);color:var(--maiz)}
+.five b{font-family:var(--display);font-size:17px}
+.five span{font-size:15px;color:var(--muted)}
+.quote{font-size:16px;background:var(--surface2);border-radius:8px;padding:14px 16px}
+.verdict{font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.verdict.ok{color:var(--ok)}.verdict.bad{color:var(--bad)}
+.ref{font-size:16px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 16px 12px 40px;text-indent:-24px}
+.ref i{font-style:italic}
+.qs{counter-reset:q;list-style:none;padding:0!important;margin:0;display:grid;gap:8px}
+.qs li{display:flex;gap:10px}
+.qs li::before{counter-increment:q;content:counter(q);font:500 13px var(--mono);color:var(--accent-ink);background:var(--accent);border-radius:50%;width:24px;height:24px;flex:0 0 auto;display:grid;place-items:center;margin-top:2px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <span class="label">Institución Educativa John F. Kennedy · San Juanito, Meta</span>
+    <h1>Investigar y construir el marco teórico</h1>
+    <p class="lead">Antes de construir, hay que saber qué se sabe ya sobre el tema. En esta guía vas a aprender a investigar para tu proyecto y a armar su marco teórico. Lee la explicación, resuelve el taller (una parte va en el cuaderno), presenta el quiz y descarga el archivo con tus respuestas.</p>
+    <div class="meta">
+      <span>Área: <b>Tecnología e Informática</b></span>
+      <span>Grado: <b>Octavo</b></span>
+      <span>Periodo: <b>4 · 2026</b></span>
+      <span>Docente: <b>Kevin Daniel Castillo Gómez</b></span>
+    </div>
+    <p class="std"><b>Clase 2:</b> investigación y marco teórico. <b>Qué vamos a aprender:</b> investigar sobre el tema del proyecto y construir un marco teórico.</p>
+  </div>
+</header>
+
+<nav class="steps" aria-label="Partes de la guía">
+  <div class="wrap" id="steps"></div>
+</nav>
+
+<main>
+<div class="wrap">
+
+<!-- ============ 1. INVESTIGAR ============ -->
+<section class="panel" id="sec-investigar">
+  <div class="block">
+    <span class="label">Clase 2 · Parte 1</span>
+    <h2>Cómo investigar para tu proyecto</h2>
+    <p>Investigar es buscar, entender y organizar lo que otras personas ya saben sobre tu tema. Así no empiezas de cero, no repites errores que otros ya cometieron y puedes explicar por qué tu proyecto funciona.</p>
+    <p class="key">Antes de buscar, escribe tu pregunta. Tema: <b>huerta escolar</b>. Pregunta: <b>¿cómo regar la huerta del colegio gastando menos agua?</b></p>
+  </div>
+
+  <div class="block">
+    <h3>Los cinco pasos</h3>
+    <ol class="five">
+      <li><span class="n">1</span><b>Definir palabras clave</b><span>Las palabras que vas a escribir en el buscador.</span></li>
+      <li><span class="n">2</span><b>Buscar en fuentes confiables</b><span>Revisar quién escribió y de dónde saca la información.</span></li>
+      <li><span class="n">3</span><b>Tomar notas con tus palabras</b><span>Entender la idea y escribirla sin copiar.</span></li>
+      <li><span class="n">4</span><b>Citar las fuentes</b><span>Decir de dónde sacaste cada idea.</span></li>
+      <li><span class="n">5</span><b>Organizar la información</b><span>Fichas de lectura y mapa conceptual.</span></li>
+    </ol>
+  </div>
+
+  <div class="block">
+    <h3>Paso 1 · Palabras clave</h3>
+    <p>Saca de tu pregunta las palabras que llevan la idea. No escribas la pregunta completa en el buscador.</p>
+    <div class="duo">
+      <div class="card"><span class="verdict bad">Búsqueda débil</span><p>"cómo hago mi proyecto de la huerta del colegio para tecnología"</p></div>
+      <div class="card"><span class="verdict ok">Búsqueda fuerte</span><p>riego por goteo · huerta escolar · ahorro de agua · hortalizas clima cálido</p></div>
+    </div>
+    <ul>
+      <li>Pon entre comillas una frase exacta: <b>"riego por goteo casero"</b>.</li>
+      <li>Agrega el lugar para resultados más cercanos: <b>huerta escolar Meta Colombia</b>.</li>
+      <li>Busca solo en páginas del gobierno colombiano: <b>riego por goteo site:.gov.co</b>.</li>
+      <li>Busca documentos en PDF, que suelen ser cartillas y guías: <b>huerta escolar filetype:pdf</b>.</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3>Paso 2 · ¿La fuente es confiable?</h3>
+    <p>Antes de usar una información, hazle estas cinco preguntas:</p>
+    <ol class="qs">
+      <li><span><b>¿Quién lo escribió?</b> Una persona o entidad con nombre y que sabe del tema.</span></li>
+      <li><span><b>¿Cuándo?</b> Tiene fecha y no está demasiado vieja para el tema.</span></li>
+      <li><span><b>¿Para qué?</b> Para informar o enseñar, no para venderte algo.</span></li>
+      <li><span><b>¿De dónde saca los datos?</b> Muestra sus fuentes o explica cómo hizo sus pruebas.</span></li>
+      <li><span><b>¿Otras fuentes dicen lo mismo?</b> Compara por lo menos con una más.</span></li>
+    </ol>
+    <div class="duo">
+      <div class="card"><span class="verdict ok">Suelen ser confiables</span><p>Libros, cartillas de ministerios y entidades como el IDEAM o Agrosavia, páginas de universidades, artículos con autor y referencias.</p></div>
+      <div class="card"><span class="verdict bad">Hay que desconfiar</span><p>Mensajes reenviados sin autor, videos sin fuentes, páginas que venden el producto del que hablan, comentarios en foros.</p></div>
+    </div>
+    <div class="duo">
+      <div class="card"><span class="label">Wikipedia</span><p>Sirve para empezar a entender un tema. Al final de cada artículo están las referencias: ve a esas fuentes y cita la original.</p></div>
+      <div class="card"><span class="label">Chats de inteligencia artificial</span><p>Pueden equivocarse y hasta inventar datos o libros que no existen. Si usas uno, comprueba cada dato en una fuente real antes de escribirlo.</p></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>Pon a prueba tu criterio</h3>
+    <p>Decide si cada fuente es confiable. Esta práctica no tiene nota.</p>
+    <div class="sorter" id="sorter"></div>
+  </div>
+
+  <div class="block">
+    <h3>Paso 3 · Notas con tus propias palabras</h3>
+    <p>Parafrasear es explicar la idea de otro con tus palabras. Cambiar dos o tres palabras de la frase original no es parafrasear: sigue siendo copiar.</p>
+    <p class="quote"><b>Texto original:</b> "Las abejas transportan el polen de una flor a otra mientras buscan su alimento, y gracias a ese trabajo muchas plantas pueden producir frutos y semillas."</p>
+    <div class="duo">
+      <div class="card"><span class="verdict bad">Copia disfrazada</span><p>"Las abejas llevan el polen de una flor a otra mientras buscan comida, y por ese trabajo muchas plantas pueden dar frutos y semillas."</p></div>
+      <div class="card"><span class="verdict ok">Paráfrasis</span><p>"Sin las abejas muchas plantas no darían fruto: al ir de flor en flor para comer, van dejando el polen que las plantas necesitan."</p></div>
+    </div>
+    <p><b>Truco:</b> lee el párrafo, ciérralo y escribe lo que entendiste. Después compara con el original para ver si te faltó algo importante.</p>
+  </div>
+
+  <div class="block">
+    <h3>Paso 4 · Citar las fuentes (normas APA)</h3>
+    <p>Citar es decir de dónde sacaste una idea. Así respetas el trabajo del autor y cualquiera puede revisar la información. Se hace en dos partes:</p>
+    <div class="duo">
+      <div class="card"><span class="label">Dentro del texto</span><p>Al final de la idea, entre paréntesis: <b>(Autor, año)</b>.</p><p class="ex">Ejemplo: ...una necesidad para el desarrollo (Ministerio de Educación Nacional, 2008).</p></div>
+      <div class="card"><span class="label">Al final, en la lista de referencias</span><p>Autor. (Año). <i>Título</i>. Editorial o sitio web. Enlace, si es de internet.</p></div>
+    </div>
+    <p class="ref">Ministerio de Educación Nacional. (2008). <i>Ser competente en tecnología: ¡una necesidad para el desarrollo!</i> (Guía n.º 30). MEN.</p>
+  </div>
+
+  <div class="block">
+    <h3>Paso 5 · Organizar la información</h3>
+    <p>Cada fuente que leas se resume en una <b>ficha de lectura</b>: tema, fuente, idea principal con tus palabras, un dato importante y una pregunta que te queda. Después las ideas de todas las fichas se juntan en un <b>mapa conceptual</b>, con el tema en el centro y los conceptos unidos con flechas y palabras de enlace.</p>
+  </div>
+
+  <div class="nav-bottom">
+    <span></span>
+    <button class="btn" data-go="marco">Seguir con el marco teórico →</button>
+  </div>
+</section>
+
+<!-- ============ 2. MARCO TEÓRICO ============ -->
+<section class="panel" id="sec-marco" hidden>
+  <div class="block">
+    <span class="label">Clase 2 · Parte 2</span>
+    <h2>¿Qué es un marco teórico?</h2>
+    <p>Es la base conceptual que sustenta tu proyecto. Incluye los conceptos, teorías e investigaciones relacionadas con tu tema. Es como los cimientos de una casa: no se ven en el producto final, pero sin ellos todo se cae.</p>
+    <p class="key">El marco teórico es tu explicación del tema, apoyada en fuentes. Pegar párrafos copiados de internet no es un marco teórico: es plagio.</p>
+  </div>
+
+  <div class="block">
+    <h3>Qué lleva</h3>
+    <p>Ejemplo para un proyecto de riego por goteo en la huerta del colegio:</p>
+    <div class="duo">
+      <div class="card"><span class="label">Conceptos clave</span><p>Qué significan las palabras importantes del proyecto.</p><p class="ex">Riego por goteo, evaporación, hortaliza, caudal.</p></div>
+      <div class="card"><span class="label">Cómo funciona</span><p>Los principios o teorías detrás del proyecto.</p><p class="ex">Cómo baja el agua por gravedad desde un tanque alto y sale gota a gota.</p></div>
+      <div class="card"><span class="label">Antecedentes</span><p>Proyectos o investigaciones parecidas que otros ya hicieron.</p><p class="ex">Huertas escolares de otros colegios que usaron botellas recicladas.</p></div>
+      <div class="card"><span class="label">Contexto</span><p>Datos del lugar donde vas a aplicar el proyecto.</p><p class="ex">El clima de San Juanito, la época de lluvias y la época seca.</p></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>Cómo se escribe un párrafo del marco teórico</h3>
+    <p>Cada párrafo explica una idea con tus palabras y termina con la cita de la fuente de donde la sacaste.</p>
+    <p class="quote">El riego por goteo es un sistema que lleva el agua, gota a gota, hasta la raíz de cada planta. Como no se moja todo el terreno, se pierde menos agua por evaporación que cuando se riega con manguera o regadera <b>(Autor, año)</b>. Por eso puede servir para la huerta del colegio en los meses secos.</p>
+    <p class="ex">En tu párrafo, cambia <b>(Autor, año)</b> por el apellido del autor o el nombre de la entidad y el año de tu fuente.</p>
+  </div>
+
+  <div class="block">
+    <h3>Cómo se construye, paso a paso</h3>
+    <ol>
+      <li>Haz la lista de conceptos que necesitas explicar.</li>
+      <li>Busca cada concepto en por lo menos dos fuentes confiables.</li>
+      <li>Haz una ficha de lectura por cada fuente.</li>
+      <li>Organiza las fichas en un mapa conceptual.</li>
+      <li>Escribe los párrafos siguiendo el orden del mapa, cada uno con su cita.</li>
+      <li>Termina con la lista de referencias en orden alfabético.</li>
+    </ol>
+  </div>
+
+  <div class="nav-bottom">
+    <button class="btn ghost" data-go="investigar">← Investigar</button>
+    <button class="btn" data-go="taller">Ir al taller →</button>
+  </div>
+</section>
+
+<!-- ============ 3. TALLER ============ -->
+<section class="panel" id="sec-taller" hidden>
+  <div class="block">
+    <span class="label">Taller · 40 puntos · 60 % de la nota</span>
+    <h2>Taller: investigo para mi proyecto</h2>
+    <p>Responde con tus propias palabras y sobre el tema real de tu proyecto. La parte C se hace a mano en el cuaderno. Lo que escribes se guarda en este computador mientras trabajas.</p>
+    <p class="small">El archivo que entregas le muestra al profesor si pegaste texto copiado en alguna respuesta.</p>
+  </div>
+  <div id="taller" style="display:grid;gap:18px"></div>
+  <div class="nav-bottom">
+    <button class="btn ghost" data-go="marco">← Marco teórico</button>
+    <button class="btn" data-go="quiz">Ir al quiz →</button>
+  </div>
+</section>
+
+<!-- ============ 4. QUIZ ============ -->
+<section class="panel" id="sec-quiz" hidden>
+  <div class="block">
+    <span class="label">Quiz · 10 preguntas · 40 % de la nota</span>
+    <h2>Quiz</h2>
+    <p>Tienes un solo intento. Cuando envíes el quiz verás tu puntaje y las respuestas correctas, y ya no podrás cambiarlas.</p>
+  </div>
+  <form id="quiz" style="display:grid;gap:14px"></form>
+  <div id="quiz-actions" class="row">
+    <button class="btn" id="send-quiz" type="button">Enviar quiz</button>
+    <span class="small" id="quiz-count"></span>
+  </div>
+  <div id="quiz-msg"></div>
+  <div class="nav-bottom">
+    <button class="btn ghost" data-go="taller">← Taller</button>
+    <button class="btn" data-go="entrega">Ir a la entrega →</button>
+  </div>
+</section>
+
+<!-- ============ 5. ENTREGA ============ -->
+<section class="panel" id="sec-entrega" hidden>
+  <div class="block">
+    <span class="label">Entrega</span>
+    <h2>Descarga tu archivo de respuestas</h2>
+    <p>Llena tus datos y descarga el archivo. Es una página web (.html) con todas tus respuestas y las fotos del cuaderno. Entrégasela al profesor por el medio que él indique. Lleva también el cuaderno: el profesor revisa la parte C allí.</p>
+  </div>
+  <div class="form">
+    <div class="field wide"><label for="est-nombre">Integrantes (nombres y apellidos; si trabajan en grupo, sepárenlos con comas)</label><input type="text" id="est-nombre" autocomplete="name" placeholder="Ej.: Laura Pérez Gómez, Juan Rodríguez Díaz"></div>
+    <div class="field"><label for="est-grupo">Grupo</label><input type="text" id="est-grupo" placeholder="Ej.: 8-1"></div>
+    <div class="field"><label for="est-fecha">Fecha</label><input type="date" id="est-fecha"></div>
+  </div>
+  <div class="card">
+    <span class="label">Cómo vas</span>
+    <ul class="status" id="status"></ul>
+  </div>
+  <div class="row">
+    <button class="btn" id="dl" type="button">Descargar mis respuestas (.html)</button>
+    <button class="btn ghost" id="open" type="button">Abrir el archivo en otra pestaña</button>
+  </div>
+  <p class="small">Si la descarga no arranca, usa "Abrir el archivo en otra pestaña" y guárdalo con Ctrl + S.</p>
+  <div id="dl-msg"></div>
+
+  <div class="card" style="gap:12px">
+    <span class="label">Computador compartido</span>
+    <p>Cuando ya descargaste tu archivo, borra tus respuestas para que el siguiente compañero empiece en limpio.</p>
+    <div class="row" id="reset-row">
+      <button class="btn warn" id="reset" type="button">Borrar mis respuestas</button>
+    </div>
+    <div class="row" id="reset-confirm" hidden>
+      <span>¿Seguro? Esto no se puede deshacer.</span>
+      <button class="btn warn" id="reset-yes" type="button">Sí, borrar todo</button>
+      <button class="btn ghost" id="reset-no" type="button">Cancelar</button>
+    </div>
+  </div>
+  <div class="nav-bottom">
+    <button class="btn ghost" data-go="quiz">← Quiz</button>
+    <span></span>
+  </div>
+</section>
+
+</div>
+</main>
+
+<footer><div class="wrap">Tecnología e Informática · Grado 8° · Periodo 4 · Clase 2: investigación y marco teórico · Docente Kevin Daniel Castillo Gómez</div></footer>
+
+<script>
+(function(){
+"use strict";
+var KEY = "jfk_tyi8_p4_investigacion_v1";
+var GRADO = "8°", TEMA = "Investigación y marco teórico", FILEBASE = "Taller_P4_Investigacion_8_";
+
+var SECTIONS = [
+  {id:"investigar", name:"Investigar"},
+  {id:"marco", name:"Marco teórico"},
+  {id:"taller", name:"Taller"},
+  {id:"quiz", name:"Quiz"},
+  {id:"entrega", name:"Entrega"}
+];
+
+var SORT_OPTS = ["Confiable","Poco confiable"];
+var SORT = [
+  {t:"Un video de una persona que vende un abono y dice que duplica la cosecha, sin mostrar pruebas.", a:"Poco confiable", why:"Quiere venderte el producto y no muestra de dónde salen sus datos."},
+  {t:"Una cartilla del Ministerio de Agricultura con autor, fecha y referencias al final.", a:"Confiable", why:"Tiene autor conocido, fecha y muestra sus fuentes."},
+  {t:"Un mensaje reenviado muchas veces por WhatsApp que no dice quién lo escribió.", a:"Poco confiable", why:"No tiene autor ni fecha, y nadie responde por esa información."},
+  {t:"Un artículo de una universidad colombiana que explica cómo hizo sus pruebas.", a:"Confiable", why:"Explica de dónde salen sus resultados, y otros pueden revisarlos."},
+  {t:"Un chat de inteligencia artificial que da un dato exacto sin decir de dónde sale.", a:"Poco confiable", why:"Puede estar equivocado o inventado. Hay que buscar el dato en una fuente real."}
+];
+
+var CASO = "Un grupo de octavo investiga cuánta agua necesita una huerta. Encontraron tres fuentes. Fuente 1: un video de una persona que vende sistemas de riego y dice que con su producto se ahorra el 90 % del agua, sin explicar cómo lo midió. Fuente 2: una cartilla de una entidad agrícola del gobierno, con autor, fecha y referencias al final. Fuente 3: una respuesta de un chat de inteligencia artificial que da un dato exacto y cita un libro que el grupo no encontró en ninguna parte.";
+var ORIGINAL = "El riego por goteo es una técnica que entrega el agua directamente en la raíz de las plantas, en pequeñas cantidades y de manera constante. Al no mojar toda la superficie del suelo, reduce la pérdida de agua por evaporación y disminuye el crecimiento de malezas entre los cultivos.";
+
+var ITEMS = [
+  {parte:"Parte A · Aprender a investigar"},
+  {id:"A1", titulo:"De tema a pregunta",
+   enunciado:"Piensa en el tema de tu proyecto tecnológico de este periodo.",
+   fields:[{id:"A1a",label:"El tema de mi proyecto",rows:1},{id:"A1b",label:"Mi pregunta de investigación (empieza con ¿Cómo...?, ¿Qué...? o ¿Por qué...?)",rows:2},{id:"A1c",label:"Cinco palabras clave para buscar, separadas por comas",rows:2},{id:"A1d",label:"Escribe cómo pondrías una de esas búsquedas en el buscador, usando comillas, el lugar o site:.gov.co",rows:2}]},
+  {id:"A2", titulo:"Análisis de caso: tres fuentes", caso:CASO,
+   enunciado:"Lee el caso y responde usando las cinco preguntas de la fuente confiable.",
+   fields:[{id:"A2a",label:"a) ¿Cuál de las tres fuentes es más confiable? Justifica con al menos dos de las cinco preguntas.",rows:3},{id:"A2b",label:"b) ¿Qué problema tiene la fuente 1?",rows:2},{id:"A2c",label:"c) ¿Qué debería hacer el grupo con el dato de la fuente 3 antes de usarlo?",rows:3}]},
+  {id:"A3", titulo:"Parafrasear y citar",
+   enunciado:"Lee el texto y escríbelo con tus palabras. No copies más de tres palabras seguidas del original.",
+   caso:"Texto original: \"" + ORIGINAL + "\" · Datos de la fuente (inventados para este ejercicio): autora Laura Martínez, año 2021, libro titulado La huerta escolar paso a paso, de la Editorial Semilla.",
+   fields:[{id:"A3a",label:"El texto con tus propias palabras, terminando con la cita dentro del texto (Autor, año)",rows:4},{id:"A3b",label:"La referencia completa en formato APA",rows:2}]},
+  {parte:"Parte B · Mi investigación"},
+  {id:"B1", titulo:"Mis fuentes",
+   enunciado:"Busca por lo menos tres fuentes confiables sobre el tema de tu proyecto y anótalas.",
+   tables:[{id:"B1t",label:"Fuentes que encontré",cols:["Fuente (título y autor)","Tipo (libro, página, video, entrevista)","¿Por qué es confiable?"],ph:["Título y autor","Tipo","Razón"],rows:3}],
+   after:[{id:"B1a",label:"Escribe las referencias de tus tres fuentes en formato APA",rows:4}]},
+  {id:"B2", titulo:"Conceptos clave de mi proyecto",
+   enunciado:"Escoge tres conceptos que tu marco teórico debe explicar. Escribe qué significa cada uno con tus palabras y de qué fuente lo sacaste.",
+   tables:[{id:"B2t",label:"Conceptos clave",cols:["Concepto","Qué es (con mis palabras)","Fuente (Autor, año)"],ph:["Concepto","Explicación","(Autor, año)"],rows:3}],
+   after:[{id:"B2a",label:"¿Cómo se relacionan estos tres conceptos con tu proyecto?",rows:3}]},
+  {parte:"Parte C · Trabajo en el cuaderno", nota:"Esta parte se hace a mano, en tu cuaderno de Tecnología, con letra clara. El profesor la revisa en el cuaderno. Si puedes, súbele una foto a la página."},
+  {id:"C1", titulo:"Mis fichas de lectura", type:"cuaderno",
+   hoja:["Escribe el título <b>Fichas de lectura</b> y la fecha.","Haz una ficha por cada una de tus tres fuentes de la tabla B1. Enmárcala con regla.","Cada ficha lleva cinco renglones: <b>Tema · Fuente (Autor, año) · Idea principal con mis palabras · Un dato importante · Una pregunta que me queda</b>.","La idea principal va escrita por ti, sin copiar frases de la fuente."],
+   fields:[{id:"C1a",label:"Copia aquí la idea principal de una de tus fichas",rows:2}]},
+  {id:"C2", titulo:"Mapa conceptual y primer párrafo", type:"cuaderno",
+   hoja:["Dibuja un mapa conceptual: el tema de tu proyecto en el centro, dentro de un recuadro.","Alrededor pon tus conceptos clave. Únelos con flechas y escribe sobre cada flecha una palabra de enlace (por ejemplo: <b>necesita</b>, <b>funciona con</b>, <b>sirve para</b>).","Debajo, escribe el primer párrafo de tu marco teórico: de 5 a 8 renglones, con tus palabras y con al menos una cita (Autor, año)."],
+   fields:[{id:"C2a",label:"Copia aquí la primera oración del párrafo que escribiste",rows:2}]},
+  {parte:"Parte D · Reflexión"},
+  {id:"D1", titulo:"Reflexión personal",
+   enunciado:"Responde con honestidad. Esta respuesta no baja la nota.",
+   fields:[{id:"D1a",label:"¿Qué fue lo más difícil de investigar sobre tu tema? ¿Cómo lo resolviste?",rows:3},{id:"D1b",label:"¿Usaste alguna herramienta de inteligencia artificial? Si la usaste, ¿para qué y cómo comprobaste lo que te dijo? Si no, escribe \"No usé\".",rows:3}]}
+];
+var GRADED = ITEMS.filter(function(x){ return x.id; });
+
+var QUIZ = [
+  {q:"¿Qué es un marco teórico?",
+   o:["La lista de materiales del proyecto","La base de conceptos, teorías e investigaciones que sustentan el proyecto","La opinión personal del estudiante sobre el tema","El dibujo final del prototipo"],
+   e:"Es la base conceptual que sustenta el proyecto."},
+  {q:"Según la guía, ¿cuál es el primer paso para investigar?",
+   o:["Citar las fuentes","Organizar la información","Definir las palabras clave","Escribir el marco teórico"],
+   e:"Primero se definen las palabras clave para saber qué buscar."},
+  {q:"Tu proyecto es un bebedero automático para gallinas. ¿Cuál es la mejor búsqueda?",
+   o:["cómo hago mi proyecto de tecnología","agua","gallinas bonitas","\"bebedero automático\" gallinas"],
+   e:"Usa las palabras que llevan la idea, y las comillas buscan la frase exacta."},
+  {q:"¿Cuál de estas fuentes es más confiable?",
+   o:["Un documento de una entidad oficial con autor, fecha y referencias","Un comentario en un foro sin nombre","Un video de alguien que vende el producto","Un mensaje reenviado por WhatsApp"],
+   e:"Tiene autor, fecha y muestra sus fuentes."},
+  {q:"Tomar notas con tus propias palabras significa...",
+   o:["Copiar el párrafo y cambiar dos palabras","Leer, entender la idea y escribirla sin copiar las frases del texto","Copiar el texto completo en el cuaderno","Escribir solo el título de la página"],
+   e:"Cambiar unas palabras sigue siendo copiar."},
+  {q:"¿Por qué hay que citar las fuentes?",
+   o:["Para que el trabajo se vea más largo","Porque así lo pide el computador","Para reconocer el trabajo del autor y que otros puedan revisar la información","Para no tener que escribir con mis palabras"],
+   e:"Citar respeta al autor y permite verificar."},
+  {q:"Un chat de inteligencia artificial te da un dato y te cita un libro. ¿Qué haces?",
+   o:["Busco el libro o el dato en una fuente real antes de usarlo","Lo copio tal cual, porque la IA no se equivoca","Lo uso sin citarlo","Le pregunto otra vez al chat si es verdad"],
+   e:"La IA puede inventar datos y libros: hay que verificar en una fuente real."},
+  {q:"En normas APA, la cita dentro del texto se escribe así:",
+   o:["[Título de la página]","(Autor, año)","\"Lo saqué de internet\"","(www.google.com)"],
+   e:"Apellido del autor o nombre de la entidad, y año, entre paréntesis."},
+  {q:"¿Qué incluye un marco teórico?",
+   o:["Solo opiniones personales","El presupuesto y la lista de integrantes","Los nombres de los profesores","Conceptos clave, cómo funciona, antecedentes y datos del contexto"],
+   e:"Son las cuatro partes que vimos en la explicación."},
+  {q:"¿Cómo se debe usar Wikipedia en una investigación?",
+   o:["Como la única fuente del trabajo","Como punto de partida, y luego ir a las referencias para citar la fuente original","No se puede abrir nunca","Copiando sus párrafos en el marco teórico"],
+   e:"Sirve para empezar; se cita la fuente original."}
+];
+var QK = "bffbbbccda";
+function ans(i){ return (QK.charCodeAt(i) - 97 - i*3 % 4 + 8) % 4; }
+var LETTERS = ["A","B","C","D"];
+
+function blank(){ return {est:{nombre:"",grupo:"",fecha:""}, t:{}, q:{ans:[], sent:false}, sort:{}, paste:{}, img:{}}; }
+var state = blank();
+function load(){
+  try{ var raw = localStorage.getItem(KEY); if(raw){ var o = JSON.parse(raw); var b = blank();
+    for(var k in b){ if(o[k] !== undefined) state[k] = o[k]; } } }catch(e){}
+  if(!Array.isArray(state.q.ans)) state.q.ans = [];
+}
+var saveWarned = false;
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }
+  catch(e){
+    try{ var lite = JSON.parse(JSON.stringify(state)); lite.img = {}; localStorage.setItem(KEY, JSON.stringify(lite)); }catch(e2){}
+    if(!saveWarned){ saveWarned = true; var m = $("#img-warn"); if(m) m.hidden = false; }
+  }
+  updateStatus();
+}
+
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function $(s){ return document.querySelector(s); }
+function v(k){ return (state.t[k] || "").trim(); }
+
+/* ---------- Navegación ---------- */
+var current = SECTIONS[0].id;
+function renderSteps(){
+  var h = "", c = countFilled();
+  SECTIONS.forEach(function(s, i){
+    var done = (s.id === "taller" && c.done === c.total) || (s.id === "quiz" && state.q.sent);
+    h += '<button class="step" data-go="'+s.id+'" aria-current="'+(s.id===current)+'"><span class="n">'+(i+1)+'</span>'+s.name+(done?' <span class="done">✓</span>':'')+'</button>';
+  });
+  $("#steps").innerHTML = h;
+}
+function go(id){
+  current = id;
+  SECTIONS.forEach(function(s){ document.getElementById("sec-"+s.id).hidden = (s.id !== id); });
+  renderSteps(); window.scrollTo(0,0);
+}
+document.addEventListener("click", function(e){ var b = e.target.closest("[data-go]"); if(b) go(b.getAttribute("data-go")); });
+
+/* ---------- Clasificador ---------- */
+function renderSorter(){
+  var h = "";
+  SORT.forEach(function(it, i){
+    var pick = state.sort[i], fb = "";
+    if(pick){ var ok = pick === it.a; fb = '<div class="fb '+(ok?"ok":"bad")+'">'+(ok?"Correcto. ":"No: es "+it.a.toLowerCase()+". ")+esc(it.why)+'</div>'; }
+    h += '<div class="sort-item"><p>'+esc(it.t)+'</p><div class="btns">'+
+      SORT_OPTS.map(function(o){ return '<button type="button" class="chip" data-sort="'+i+'" data-pick="'+o+'">'+o+'</button>'; }).join("")+'</div>'+fb+'</div>';
+  });
+  $("#sorter").innerHTML = h;
+}
+document.addEventListener("click", function(e){
+  var b = e.target.closest("[data-sort]"); if(!b) return;
+  state.sort[b.getAttribute("data-sort")] = b.getAttribute("data-pick"); save(); renderSorter();
+});
+
+/* ---------- Taller ---------- */
+function fieldHTML(f){
+  return '<div class="field"><label for="f-'+f.id+'">'+esc(f.label)+'</label><textarea id="f-'+f.id+'" data-k="'+f.id+'" rows="'+(f.rows||3)+'">'+esc(state.t[f.id]||"")+'</textarea></div>';
+}
+function inputHTML(k, ph, label){
+  return '<input type="text" id="f-'+k+'" data-k="'+k+'" value="'+esc(state.t[k]||"")+'" placeholder="'+esc(ph)+'" aria-label="'+esc(label)+'">';
+}
+function tableHTML(tb){
+  var h = '<div class="field"><span style="font-weight:600;font-size:15px">'+esc(tb.label)+'</span><div class="tablebox"><table class="edit"><thead><tr>';
+  tb.cols.forEach(function(c){ h += '<th>'+esc(c)+'</th>'; });
+  h += '</tr></thead><tbody>';
+  for(var r=0;r<tb.rows;r++){
+    h += '<tr>';
+    tb.cols.forEach(function(c, j){ h += '<td>'+inputHTML(tb.id+r+"_"+j, tb.ph[j], c+" "+(r+1))+'</td>'; });
+    h += '</tr>';
+  }
+  return h + '</tbody></table></div></div>';
+}
+function photosHTML(id){
+  var list = state.img[id] || [], h = "";
+  list.forEach(function(src, i){ h += '<div class="photo"><img src="'+src+'" alt="Foto '+(i+1)+' del cuaderno"><button type="button" data-rmimg="'+id+':'+i+'">Quitar</button></div>'; });
+  return h;
+}
+function cuadernoHTML(it){
+  var h = '<div class="notebook"><ol>';
+  it.hoja.forEach(function(x){ h += '<li>'+x+'</li>'; });
+  h += '</ol></div>';
+  h += '<div class="row2"><label class="check"><input type="checkbox" id="f-'+it.id+'chk" data-k="'+it.id+'chk"'+(state.t[it.id+"chk"]==="si"?" checked":"")+'> Ya lo hice en mi cuaderno</label>'+
+       '<div class="field"><label for="f-'+it.id+'pg">Página(s) del cuaderno</label>'+inputHTML(it.id+"pg","Ej.: 34 y 35","Páginas")+'</div></div>';
+  h += '<div class="upload"><label for="img-'+it.id+'"><b>Foto de la página</b> <span class="small">(opcional, máximo 2 fotos)</span></label>'+
+       '<input type="file" id="img-'+it.id+'" data-img="'+it.id+'" accept="image/*" capture="environment" multiple>'+
+       '<div class="photos" id="ph-'+it.id+'">'+photosHTML(it.id)+'</div></div>';
+  return h;
+}
+function renderTaller(){
+  var h = "";
+  ITEMS.forEach(function(it){
+    if(it.parte){ h += '<h3 class="parte">'+esc(it.parte)+'</h3>'+(it.nota?'<p class="key" style="font-size:16px">'+esc(it.nota)+'</p>':''); return; }
+    h += '<article class="item'+(it.type==="cuaderno"?" hand":"")+'"><header><span class="code">'+it.id+'</span><h3>'+esc(it.titulo)+'</h3><span class="pts">'+(it.type==="cuaderno"?"en el cuaderno · ":"")+'5 puntos</span></header>';
+    if(it.enunciado) h += '<p>'+esc(it.enunciado)+'</p>';
+    if(it.caso) h += '<div class="caso">'+esc(it.caso)+'</div>';
+    if(it.type==="cuaderno") h += cuadernoHTML(it);
+    (it.fields||[]).forEach(function(f){ h += fieldHTML(f); });
+    (it.tables||[]).forEach(function(tb){ h += tableHTML(tb); });
+    (it.after||[]).forEach(function(f){ h += fieldHTML(f); });
+    h += '</article>';
+  });
+  h += '<p class="msg bad" id="img-warn" hidden>Las fotos no caben en la memoria de este computador. No cierres la página: descarga tu archivo de respuestas antes de salir, porque las fotos sí van dentro.</p>';
+  $("#taller").innerHTML = h;
+}
+
+function units(){
+  var u = [];
+  GRADED.forEach(function(it){
+    (it.fields||[]).concat(it.after||[]).forEach(function(f){ u.push(v(f.id).length >= 3); });
+    (it.tables||[]).forEach(function(tb){
+      for(var r=0;r<tb.rows;r++){ var full = true; tb.cols.forEach(function(c, j){ if(!v(tb.id+r+"_"+j)) full = false; }); u.push(full); }
+    });
+    if(it.type==="cuaderno") u.push(state.t[it.id+"chk"]==="si");
+  });
+  return u;
+}
+function countFilled(){ var u = units(), d = 0; u.forEach(function(x){ if(x) d++; }); return {done:d, total:u.length}; }
+
+var saveTimer;
+function later(){ clearTimeout(saveTimer); saveTimer = setTimeout(function(){ save(); renderSteps(); }, 300); }
+document.addEventListener("input", function(e){
+  var k = e.target.getAttribute && e.target.getAttribute("data-k");
+  if(!k || e.target.type === "checkbox") return;
+  state.t[k] = e.target.value; later();
+});
+document.addEventListener("change", function(e){
+  var k = e.target.getAttribute && e.target.getAttribute("data-k");
+  if(k && e.target.type === "checkbox"){ state.t[k] = e.target.checked ? "si" : ""; save(); renderSteps(); }
+});
+document.addEventListener("paste", function(e){
+  var k = e.target.getAttribute && e.target.getAttribute("data-k"); if(!k) return;
+  var txt = ""; try{ txt = (e.clipboardData || window.clipboardData).getData("text") || ""; }catch(err){}
+  if(txt.length){ state.paste[k] = (state.paste[k] || 0) + txt.length; later(); }
+});
+
+/* Fotos */
+function shrink(file, cb){
+  var fr = new FileReader();
+  fr.onload = function(){
+    var img = new Image();
+    img.onload = function(){
+      var max = 1400, w = img.width, h = img.height, s = Math.min(1, max / Math.max(w, h));
+      var c = document.createElement("canvas"); c.width = Math.round(w*s); c.height = Math.round(h*s);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      cb(c.toDataURL("image/jpeg", 0.72));
+    };
+    img.onerror = function(){ cb(null); };
+    img.src = fr.result;
+  };
+  fr.onerror = function(){ cb(null); };
+  fr.readAsDataURL(file);
+}
+document.addEventListener("change", function(e){
+  var id = e.target.getAttribute && e.target.getAttribute("data-img"); if(!id) return;
+  var files = Array.prototype.slice.call(e.target.files || []);
+  state.img[id] = state.img[id] || [];
+  files.slice(0, Math.max(0, 2 - state.img[id].length)).forEach(function(f){
+    shrink(f, function(src){
+      if(!src) return;
+      state.img[id].push(src); save();
+      document.getElementById("ph-"+id).innerHTML = photosHTML(id);
+    });
+  });
+  e.target.value = "";
+});
+document.addEventListener("click", function(e){
+  var b = e.target.closest("[data-rmimg]"); if(!b) return;
+  var p = b.getAttribute("data-rmimg").split(":");
+  (state.img[p[0]] || []).splice(+p[1], 1); save();
+  document.getElementById("ph-"+p[0]).innerHTML = photosHTML(p[0]);
+});
+
+/* ---------- Quiz ---------- */
+function quizScore(){ var c = 0; QUIZ.forEach(function(q, i){ if(state.q.ans[i] === ans(i)) c++; }); return c; }
+function renderQuiz(){
+  var sent = state.q.sent, h = "";
+  QUIZ.forEach(function(q, i){
+    var a = ans(i);
+    h += '<fieldset class="q"><legend><span class="n">'+String(i+1).padStart(2,"0")+'</span><span>'+esc(q.q)+'</span></legend>';
+    q.o.forEach(function(o, j){
+      var cls = "";
+      if(sent){ if(j === a) cls = " correct"; else if(state.q.ans[i] === j) cls = " wrong"; }
+      h += '<label class="opt'+cls+'"><input type="radio" name="q'+i+'" value="'+j+'"'+(state.q.ans[i]===j?" checked":"")+(sent?" disabled":"")+'><span><b>'+LETTERS[j]+'.</b> '+esc(o)+'</span></label>';
+    });
+    if(sent) h += '<div class="fb '+(state.q.ans[i]===a?"ok":"bad")+'">'+(state.q.ans[i]===a?"Correcta. ":"Incorrecta. La respuesta es la "+LETTERS[a]+". ")+esc(q.e)+'</div>';
+    h += '</fieldset>';
+  });
+  $("#quiz").innerHTML = h;
+  $("#quiz-actions").hidden = sent;
+  if(sent){ var c = quizScore(); $("#quiz-msg").innerHTML = '<div class="score"><span class="big">'+c+' / 10</span><span>Nota del quiz: <b>'+(Math.max(1, c/2)).toFixed(1)+'</b>. Ya quedó registrada en tu archivo de entrega.</span></div>'; }
+  updateQuizCount();
+}
+function updateQuizCount(){
+  var n = 0; for(var i=0;i<QUIZ.length;i++) if(typeof state.q.ans[i] === "number") n++;
+  var el = $("#quiz-count"); if(el) el.textContent = n+" de "+QUIZ.length+" respondidas";
+}
+document.addEventListener("change", function(e){
+  if(e.target.name && /^q\d+$/.test(e.target.name) && !state.q.sent){
+    state.q.ans[parseInt(e.target.name.slice(1),10)] = parseInt(e.target.value,10); save(); updateQuizCount();
+  }
+});
+$("#send-quiz").addEventListener("click", function(){
+  var miss = []; for(var i=0;i<QUIZ.length;i++) if(typeof state.q.ans[i] !== "number") miss.push(i+1);
+  if(miss.length){ $("#quiz-msg").innerHTML = '<p class="msg bad">Te falta responder: '+miss.join(", ")+'.</p>'; return; }
+  state.q.sent = true; save(); renderQuiz(); renderSteps();
+});
+
+/* ---------- Entrega ---------- */
+function todayISO(){ var d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function bindStudent(){
+  if(!state.est.fecha) state.est.fecha = todayISO();
+  [["nombre","#est-nombre"],["grupo","#est-grupo"],["fecha","#est-fecha"]].forEach(function(p){
+    var el = $(p[1]); el.value = state.est[p[0]] || "";
+    el.addEventListener("input", function(){ state.est[p[0]] = el.value; save(); });
+  });
+}
+function nImgs(){ var n = 0; for(var k in state.img) n += (state.img[k]||[]).length; return n; }
+function hands(){ return GRADED.filter(function(x){ return x.type==="cuaderno"; }); }
+function updateStatus(){
+  var el = $("#status"); if(!el) return;
+  var c = countFilled(), h = "", hs = hands(), cu = hs.filter(function(x){ return state.t[x.id+"chk"]==="si"; }).length;
+  h += '<li><span class="dot '+(state.est.nombre.trim().length>4?"ok":"")+'"></span>Integrantes: '+(state.est.nombre.trim()?esc(state.est.nombre):"sin escribir")+'</li>';
+  h += '<li><span class="dot '+(c.done===c.total?"ok":(c.done?"half":""))+'"></span>Taller: '+c.done+' de '+c.total+' partes completas</li>';
+  h += '<li><span class="dot '+(cu===hs.length?"ok":(cu?"half":""))+'"></span>Cuaderno: '+cu+' de '+hs.length+' actividades confirmadas · '+nImgs()+' foto(s)</li>';
+  h += '<li><span class="dot '+(state.q.sent?"ok":"")+'"></span>Quiz: '+(state.q.sent?"enviado, "+quizScore()+" de 10":"sin enviar")+'</li>';
+  el.innerHTML = h;
+}
+function fileName(){
+  var n = (state.est.nombre||"estudiante").normalize("NFD").replace(/[̀-ͯ]/g,"").trim().replace(/[^A-Za-z0-9]+/g,"_").replace(/^_|_$/g,"");
+  return FILEBASE+(n||"estudiante")+".html";
+}
+
+/* ---------- Archivo para el docente ---------- */
+function pasteMark(k){ return state.paste[k] ? ' <span class="pg">Pegó texto · '+state.paste[k]+' caracteres</span>' : ""; }
+function qa(f){
+  var val = v(f.id);
+  return '<div class="qa"><div class="ql">'+esc(f.label)+pasteMark(f.id)+'</div><div class="ans'+(val?"":" empty")+'">'+(val?esc(val):"(sin respuesta)")+'</div></div>';
+}
+function cell(k){ var x = v(k); return (x?esc(x):'<span class="empty">—</span>') + (state.paste[k]?' <span class="pg">pegado</span>':''); }
+function buildReport(){
+  var e = state.est, c = quizScore(), pasted = 0;
+  for(var pk in state.paste) if(state.paste[pk]) pasted++;
+  var items = "";
+  ITEMS.forEach(function(it){
+    if(it.parte){ items += '<h2>'+esc(it.parte)+'</h2>'; return; }
+    items += '<div class="it'+(it.type==="cuaderno"?" hand":"")+'"><div class="ih"><span class="code">'+it.id+'</span><h3>'+esc(it.titulo)+'</h3></div>';
+    if(it.enunciado) items += '<p class="en">'+esc(it.enunciado)+'</p>';
+    if(it.caso) items += '<p class="caso">'+esc(it.caso)+'</p>';
+    if(it.type==="cuaderno"){
+      var ok = state.t[it.id+"chk"]==="si", pg = v(it.id+"pg"), ims = state.img[it.id] || [];
+      items += '<ol class="hoja">'+it.hoja.map(function(x){ return '<li>'+x+'</li>'; }).join("")+'</ol>';
+      items += '<p class="cu '+(ok?"y":"n")+'">'+(ok?"El estudiante confirmó que lo hizo en el cuaderno":"El estudiante NO confirmó que lo hizo en el cuaderno")+(pg?' · Página(s): <b>'+esc(pg)+'</b>':'')+'</p>';
+      items += ims.length ? '<div class="imgs">'+ims.map(function(s,i){ return '<a href="'+s+'" target="_blank" rel="noopener"><img src="'+s+'" alt="Foto '+(i+1)+' del cuaderno"></a>'; }).join("")+'</div>' : '<p class="en">Sin foto. Revise el cuaderno.</p>';
+    }
+    (it.fields||[]).forEach(function(f){ items += qa(f); });
+    (it.tables||[]).forEach(function(tb){
+      items += '<div class="qa"><div class="ql">'+esc(tb.label)+'</div><div class="tb"><table><thead><tr>'+tb.cols.map(function(x){ return '<th>'+esc(x)+'</th>'; }).join("")+'</tr></thead><tbody>';
+      for(var r=0;r<tb.rows;r++) items += '<tr>'+tb.cols.map(function(x, j){ return '<td>'+cell(tb.id+r+"_"+j)+'</td>'; }).join("")+'</tr>';
+      items += '</tbody></table></div></div>';
+    });
+    (it.after||[]).forEach(function(f){ items += qa(f); });
+    items += '<div class="grade"><label>Puntaje (0 a 5) <input class="p" type="number" min="0" max="5" step="0.5" inputmode="decimal" id="p-'+it.id+'"></label>'+
+      '<label class="cm">Comentario <textarea rows="2" id="c-'+it.id+'"></textarea></label></div></div>';
+  });
+
+  var qrows = "";
+  QUIZ.forEach(function(q, i){
+    var a = state.q.ans[i], k = ans(i), ok = a === k;
+    qrows += '<tr><td>'+(i+1)+'</td><td>'+esc(q.q)+'</td><td>'+(typeof a==="number"?LETTERS[a]+". "+esc(q.o[a]):"(sin responder)")+'</td><td>'+LETTERS[k]+". "+esc(q.o[k])+'</td><td class="'+(ok?"ok":"no")+'">'+(ok?"✓":"✗")+'</td></tr>';
+  });
+
+  var css = 'body{font:15px/1.5 "Segoe UI",system-ui,sans-serif;color:#17231E;background:#F3F6F4;margin:0}'+
+    '.page{max-width:900px;margin:0 auto;padding:24px 16px 60px}'+
+    'header.doc{background:#fff;border:1px solid #CAD7CF;border-top:6px solid #2E6B45;border-radius:8px;padding:18px 20px;display:grid;gap:6px}'+
+    'h1{font-size:22px;margin:0}h2{font-size:17px;margin:28px 0 10px;color:#2E6B45;border-bottom:1px solid #CAD7CF;padding-bottom:4px}h3{font-size:16px;margin:0}'+
+    '.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 18px}.grid b{color:#55665E;font-weight:600}'+
+    '.sum{background:#fff;border:2px solid #2E6B45;border-radius:8px;padding:14px 18px;margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}'+
+    '.sum div{display:grid}.sum span{font-size:12px;color:#55665E;text-transform:uppercase;letter-spacing:.06em}.sum strong{font-size:24px;font-variant-numeric:tabular-nums}'+
+    '#pend{grid-column:1/-1;font-size:14px;color:#9A6B0C}.alert{grid-column:1/-1;font-size:14px;color:#9C2A21;background:#F7E0DD;padding:6px 10px;border-radius:6px}'+
+    '.it{background:#fff;border:1px solid #CAD7CF;border-radius:8px;padding:14px 16px;margin:12px 0;display:grid;gap:10px}.it.hand{border-color:#9A6B0C}'+
+    '.ih{display:flex;gap:10px;align-items:center}.code{background:#2E6B45;color:#fff;font:600 12px monospace;padding:2px 7px;border-radius:4px}.hand .code{background:#9A6B0C}'+
+    '.en{margin:0;color:#55665E}.caso{margin:0;background:#E6EEE9;padding:10px 12px;border-radius:6px;font-size:14px}'+
+    '.hoja{margin:0;padding:8px 12px 8px 30px;background:#FFFDF6;border:1px solid #E5DCC0;border-radius:6px;font-size:14px;color:#55665E}'+
+    '.cu{margin:0;padding:8px 10px;border-radius:6px;font-weight:600}.cu.y{background:#DCEFE3;color:#1F6B3E}.cu.n{background:#F7E0DD;color:#9C2A21}'+
+    '.imgs{display:flex;flex-wrap:wrap;gap:10px}.imgs img{max-width:100%;width:400px;border-radius:6px;border:1px solid #CAD7CF;display:block}'+
+    '.qa{display:grid;gap:3px}.ql{font-weight:600;font-size:14px}.ans{white-space:pre-wrap;background:#F8FAF9;border-left:3px solid #9A6B0C;padding:8px 10px;border-radius:0 6px 6px 0}.ans.empty,.empty{color:#B3261E;font-style:italic}'+
+    '.pg{display:inline-block;font-size:12px;font-weight:600;color:#9C2A21;background:#F7E0DD;padding:1px 8px;border-radius:999px;margin-left:6px}'+
+    '.grade{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start;background:#F5EACB;padding:10px 12px;border-radius:6px}.grade label{display:grid;gap:3px;font-weight:600;font-size:13px}.grade .cm{flex:1;min-width:200px}'+
+    'input.p{width:90px;font-size:18px;padding:6px 8px;border:1px solid #9A6B0C;border-radius:6px}textarea{font:inherit;padding:6px 8px;border:1px solid #CAD7CF;border-radius:6px;width:100%;box-sizing:border-box}'+
+    '.tb{overflow-x:auto;background:#fff;border:1px solid #CAD7CF;border-radius:8px}table{border-collapse:collapse;width:100%;min-width:560px;font-size:14px}th,td{padding:8px 10px;border-bottom:1px solid #E1E9E4;text-align:left;vertical-align:top}th{background:#E6EEE9}'+
+    'td.ok{color:#2E7D4F;font-weight:700;font-size:18px}td.no{color:#B3261E;font-weight:700;font-size:18px}'+
+    '.bar{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.bar button{font:inherit;font-weight:700;padding:9px 16px;border-radius:6px;border:1px solid #2E6B45;background:#2E6B45;color:#fff;cursor:pointer}.bar button.g{background:#fff;color:#2E6B45}'+
+    '.note{font-size:13px;color:#55665E}'+
+    '@media print{.bar,.note{display:none}body{background:#fff}.it,.sum,header.doc{break-inside:avoid}}';
+
+  var handIds = hands().map(function(x){ return x.id; }).join(" y ");
+  var js = '(function(){var QC='+c+',NI='+GRADED.length+';'+
+    'function r1(x){return (Math.round(x*10+1e-9)/10).toFixed(1);}'+
+    'function lvl(n){n=Math.round(n*10+1e-9)/10;return n>=4.6?"Superior":n>=4.0?"Alto":n>=3.0?"Básico":"Bajo";}'+
+    'function r(){var s=0,k=0;document.querySelectorAll("input.p").forEach(function(i){var v=parseFloat(String(i.value).replace(",","."));if(!isNaN(v)){v=Math.max(0,Math.min(5,v));s+=v;k++;}});'+
+    'var nt=s/(NI*5)*5,nq=QC/10*5,nf=Math.max(1,0.6*nt+0.4*nq);'+
+    'document.getElementById("s-t").textContent=s+" / "+(NI*5);document.getElementById("n-t").textContent=r1(nt);'+
+    'document.getElementById("n-f").textContent=r1(nf);document.getElementById("l-f").textContent=lvl(nf);'+
+    'document.getElementById("pend").textContent=k<NI?"Faltan "+(NI-k)+" ítems del taller por calificar. La nota final cambia cuando los califique.":"Taller calificado completo.";}'+
+    'document.addEventListener("input",r);r();'+
+    'document.getElementById("save").addEventListener("click",function(){document.querySelectorAll("input").forEach(function(i){i.setAttribute("value",i.value)});'+
+    'document.querySelectorAll("textarea").forEach(function(t){t.textContent=t.value});'+
+    'var h="<!doctype html>\\n"+document.documentElement.outerHTML;var b=new Blob([h],{type:"text/html;charset=utf-8"});'+
+    'var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=document.body.getAttribute("data-file").replace(/(_CALIFICADO)?\\.html$/,"")+"_CALIFICADO.html";document.body.appendChild(a);a.click();a.remove();});'+
+    'document.getElementById("pr").addEventListener("click",function(){window.print();});})();';
+
+  var when = new Date();
+  var stamp = when.toLocaleDateString("es-CO")+" "+when.toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit"});
+
+  return '<!doctype html>\n<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'+
+    '<title>'+esc(TEMA)+' '+GRADO+' · '+esc(e.nombre||"Estudiante")+'</title><style>'+css+'</style></head>'+
+    '<body data-file="'+esc(fileName())+'"><div class="page">'+
+    '<header class="doc"><span class="note">IE John F. Kennedy · San Juanito, Meta · Tecnología e Informática</span>'+
+    '<h1>Taller y quiz · '+esc(TEMA)+'</h1>'+
+    '<div class="grid"><div><b>Integrantes:</b> '+esc(e.nombre||"(sin nombre)")+'</div><div><b>Grupo:</b> '+esc(e.grupo||"—")+'</div>'+
+    '<div><b>Fecha:</b> '+esc(e.fecha||"—")+'</div><div><b>Grado / periodo:</b> '+GRADO+' · Periodo 4 · 2026</div>'+
+    '<div><b>Archivo generado:</b> '+esc(stamp)+'</div><div><b>Docente:</b> Kevin Daniel Castillo Gómez</div></div></header>'+
+    '<div class="sum">'+
+    '<div><span>Taller</span><strong id="s-t">0 / 40</strong></div>'+
+    '<div><span>Nota taller (60 %)</span><strong id="n-t">0.0</strong></div>'+
+    '<div><span>Quiz</span><strong>'+c+' / 10</strong></div>'+
+    '<div><span>Nota quiz (40 %)</span><strong>'+(c/2).toFixed(1)+'</strong></div>'+
+    '<div><span>Nota final</span><strong id="n-f">1.0</strong></div>'+
+    '<div><span>Desempeño</span><strong id="l-f">Bajo</strong></div>'+
+    '<div id="pend"></div>'+
+    (pasted?'<div class="alert">Pegó texto copiado en '+pasted+' campo(s). Están marcados en rojo con la etiqueta "Pegó texto".</div>':'')+
+    '</div>'+
+    '<div class="bar"><button id="save" type="button">Guardar copia calificada</button><button id="pr" class="g" type="button">Imprimir</button></div>'+
+    '<p class="note">Califique cada ítem de 0 a 5 en los recuadros amarillos. Los ítems '+handIds+' se revisan en el cuaderno o en la foto. La nota se calcula sola: 60 % taller y 40 % quiz, en escala de 1.0 a 5.0. "Guardar copia calificada" descarga este mismo archivo con sus puntajes y comentarios.</p>'+
+    '<h2>Quiz'+(state.q.sent?"":" (el estudiante no lo envió)")+'</h2>'+
+    '<div class="tb"><table><thead><tr><th>#</th><th>Pregunta</th><th>Respuesta del estudiante</th><th>Correcta</th><th></th></tr></thead><tbody>'+qrows+'</tbody></table></div>'+
+    items+
+    '<div class="it"><div class="ih"><h3>Observación general</h3></div><textarea rows="3" id="obs"></textarea></div>'+
+    '</div><script>'+js+'<\/script></body></html>';
+}
+
+var lastUrl = null;
+function makeUrl(){
+  if(lastUrl) URL.revokeObjectURL(lastUrl);
+  lastUrl = URL.createObjectURL(new Blob([buildReport()], {type:"text/html;charset=utf-8"}));
+  return lastUrl;
+}
+function check(){
+  var p = [];
+  if(state.est.nombre.trim().length < 5) p.push("escribe los nombres completos");
+  if(!state.est.grupo.trim()) p.push("escribe el grupo");
+  return p;
+}
+function warnings(){
+  var w = [], c = countFilled();
+  if(c.done < c.total) w.push("te faltan "+(c.total-c.done)+" partes del taller");
+  if(hands().some(function(x){ return state.t[x.id+"chk"]!=="si"; })) w.push("no has confirmado todo el trabajo del cuaderno");
+  if(!state.q.sent) w.push("no has enviado el quiz");
+  return w;
+}
+$("#dl").addEventListener("click", function(){
+  var p = check();
+  if(p.length){ $("#dl-msg").innerHTML = '<p class="msg bad">Antes de descargar, '+p.join(" y ")+'.</p>'; return; }
+  var a = document.createElement("a"); a.href = makeUrl(); a.download = fileName();
+  document.body.appendChild(a); a.click(); a.remove();
+  var w = warnings();
+  $("#dl-msg").innerHTML = '<p class="msg ok">Se descargó <b>'+esc(fileName())+'</b>. Búscalo en la carpeta Descargas.'+(w.length?' Ojo: '+w.join(", ")+'. Si completas lo que falta, vuelve a descargar.':'')+'</p>';
+});
+$("#open").addEventListener("click", function(){
+  var p = check();
+  if(p.length){ $("#dl-msg").innerHTML = '<p class="msg bad">Antes de abrir el archivo, '+p.join(" y ")+'.</p>'; return; }
+  var win = window.open(makeUrl(), "_blank");
+  if(!win) $("#dl-msg").innerHTML = '<p class="msg bad">El navegador bloqueó la pestaña nueva. Permite las ventanas emergentes para esta página e intenta otra vez.</p>';
+});
+$("#reset").addEventListener("click", function(){ $("#reset-row").hidden = true; $("#reset-confirm").hidden = false; });
+$("#reset-no").addEventListener("click", function(){ $("#reset-row").hidden = false; $("#reset-confirm").hidden = true; });
+$("#reset-yes").addEventListener("click", function(){
+  try{ localStorage.removeItem(KEY); }catch(e){}
+  state = blank(); state.est.fecha = todayISO(); saveWarned = false;
+  $("#est-nombre").value = ""; $("#est-grupo").value = ""; $("#est-fecha").value = state.est.fecha;
+  renderSorter(); renderTaller(); renderQuiz(); $("#quiz-msg").innerHTML = "";
+  $("#dl-msg").innerHTML = '<p class="msg ok">Respuestas borradas. El computador quedó listo para el siguiente estudiante.</p>';
+  $("#reset-row").hidden = false; $("#reset-confirm").hidden = true;
+  save(); renderSteps();
+});
+
+load();
+renderSorter(); renderTaller(); renderQuiz(); bindStudent(); updateStatus(); renderSteps();
+})();
+</script>
+</body>
+</html>
